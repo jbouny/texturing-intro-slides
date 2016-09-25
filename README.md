@@ -1,5 +1,5 @@
-# texturing-intro-slides
+# Texturing intro slides
 
 Slides to indroduce 3D texturing world
 
-[Onlince slides](https://jbouny.github.io/texturing-intro-slides/)
+[Online slides](https://jbouny.github.io/texturing-intro-slides/)

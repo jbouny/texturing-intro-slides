@@ -1,4 +1,4 @@
-# Texturing intro slides
+# Texturing intro slides - WIP
 
 Slides to indroduce 3D texturing world
 

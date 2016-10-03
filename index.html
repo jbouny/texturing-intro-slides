@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -24,8 +24,246 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section data-markdown>
+					<script type="text/template">
+						#Intoduction to 3D texturing
+						
+						Use case in OpenGL for video games
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## What is texturing?
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Why this need?
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Graphical pipeline
+						- Vertices / Primitives
+						- Vertex processor
+						- Rasterization
+						- Fragment processor
+						- Output
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						EXAMPLE: rotating cube
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Shader?
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Fragment shader
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Write our own
+						- OpenGL
+						- WebGL
+						- GLSL
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						EXAMPLE: color
+						
+							void main()
+							{
+								gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
+							}
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						EXAMPLE: color controlled by time variable
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Texture?
+						- What is a texture
+						- Format (FP/bpp)
+						- Interpretation
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Texture as input
+						- What to sample?
+						- UV unfolding
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						EXAMPLE: basic texture (totoro mesh)
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						EXAMPLE: repeating texture
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Cool!
+						- But... it's quite flat
+						- ... we want light
+						- Normal (definition)
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Let's add a light specular point
+						EXAMPLE: light with different specular factors
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Or some light points
+						EXAMPLE: light points
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Smoothness overflow
+						- Let's add some details
+						- Normal map
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						EXAMPLE: light + normal map
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## It should be quite dirt in a forest
+						- We now want to add dirt
+						- Specular map
+						- EXAMPLE: mirror + specular map
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Blinn-phong
+						- Hey, we just implemented the blinn-phong shading
+						- Mainly used in video games
+						- Based on an empirical model
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Need realism
+						- Shadows
+						- Real time / baked in maps
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## The physicaly based revolution
+						- Need of realism
+						- Why not simply use the real world as input?
+						- Based on measurable data (light, material, animation, color spaces)
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## New workflow
+						- End of painting textures
+						- Materials creation
+							- Channels with real signification
+							- Data set or textures set
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Softwares evolution
+						- Too much data to interpret
+						- Need real time feedback instead of 2d painting
+						- Paint materials
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Metal/roughness workflow
+						
+						EXAMPLE: metal/rough
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						Used in modern games: examples
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Graphical memory consumption
+						- Some math
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## How to reduce needed memory?
+						- We spoke about "material painting"
+						- Masks / materials workflow
+						- Why not take it literally?
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Material layering
+						- Deport the blending in shaders
+						- Materials database
+						- Save only masks
+						- Dynamic aspect
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						EXAMPLE: material layering
+					</script>
+				</section>
 			</div>
 		</div>
 

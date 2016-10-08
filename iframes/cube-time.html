@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Cube example</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="lib/three.min.js"></script>
+		<script src="lib/OBJLoader.js"></script>
+		<script src="lib/OrbitControls.js"></script>
+		<script src="template_scene.js"></script>
+		
+		<script id="vertexShader" type="x-shader/x-vertex">
+		void main()
+		{
+			vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+			gl_Position = projectionMatrix * mvPosition;
+		}
+		</script>
+		
+		<script id="fragmentShader" type="x-shader/x-fragment">
+		uniform float time;
+		
+		vec3 hsv2rgb(vec3 c) // http://lolengine.net/blog/2013/07/27/rgb-to-hsv-in-glsl
+		{
+			vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+			vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+			return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+		}
+		
+		void main()
+		{
+			vec3 hsv = vec3(
+				mod(time * 0.1, 1.0), // Hue
+				0.6,                            // Saturation
+				0.5                             // Value
+			);
+			gl_FragColor = vec4(
+				hsv2rgb(hsv), // HSV => RGB conversion
+				1.0
+			);
+		}
+		</script>
+
+		<script>
+var mesh, uniforms;
+
+function init(camera, scene) {
+	uniforms = {
+		time : {value: 0}
+	}
+
+	var geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+	var material = new THREE.ShaderMaterial({
+		uniforms: uniforms,
+		vertexShader: document.getElementById( 'vertexShader' ).textContent,
+		fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+	});
+
+	mesh = new THREE.Mesh(geometry, material);
+	scene.add(mesh);
+}
+		
+function update(time) {
+	uniforms.time.value = time;
+	
+	mesh.rotation.x = time * 0.03;
+	mesh.rotation.y = time * 0.15;
+}
+
+create3DScene({
+	init: init,
+	update: update
+});
+		</script>
+	</body>
+</html>

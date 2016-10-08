@@ -4,13 +4,40 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>The 3D texturing world</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<style>
+			.hljs {
+				background-color: rgba(20, 20, 20, 0.6);
+			}
+
+			.reveal.slide .slides > section, .reveal.slide .slides > section > section {
+				min-height: 100% !important;
+				display: flex !important;
+				flex-direction: column !important;
+				justify-content: center !important;
+				position: absolute !important;
+				top: 0 !important;
+				align-items: center !important;
+			}
+
+			.full-height {
+				width: 70%;
+				min-height: 100% !important;
+				display: flex !important;
+				flex-direction: column !important;
+				position: absolute !important;
+				top: 0 !important;
+				left: 0 !important;
+				z-index: -1!important;
+			}
+		</style>
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -26,9 +53,9 @@
 			<div class="slides">
 				<section data-markdown>
 					<script type="text/template">
-						#Intoduction to 3D texturing
+						#The 3D texturing world
 						
-						Use case in OpenGL for video games
+						Use case in WebGL for video games
 					</script>
 				</section>
 
@@ -57,12 +84,6 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						EXAMPLE: rotating cube
-					</script>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
 						## Shader?
 					</script>
 				</section>
@@ -84,18 +105,42 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						EXAMPLE: color
-						
+						<iframe class="full-height" data-src="iframes/cube.html"></iframe>
+						#### Hello_world.glsl
+
+							// Fragment shader
 							void main()
 							{
-								gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
+								gl_FragColor = vec4(
+									0.4, // Red
+									0.5, // Green
+									0.2, // Blue
+									1.0  // Alpha
+								);
 							}
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						EXAMPLE: color controlled by time variable
+						<iframe class="full-height" data-src="iframes/cube-time.html"></iframe>
+						#### Better_hello_world.glsl
+
+							// Fragment shader
+							uniform float time;
+
+							void main()
+							{
+								vec3 hsv = vec3(
+									mod(time * 0.1, 1.0), // Hue
+									0.6,                  // Saturation
+									0.5                   // Value
+								);
+								gl_FragColor = vec4(
+									hsv2rgb(hsv), // HSV => RGB conversion
+									1.0
+								);
+							}
 					</script>
 				</section>
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Cube example</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="lib/three.min.js"></script>
+		<script src="lib/OBJLoader.js"></script>
+		<script src="lib/OrbitControls.js"></script>
+		<script src="template_scene.js"></script>
+		
+		<script id="vertexShader" type="x-shader/x-vertex">
+		void main()
+		{
+			vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+			gl_Position = projectionMatrix * mvPosition;
+		}
+		</script>
+		
+		<script id="fragmentShader" type="x-shader/x-fragment">
+		void main()
+		{
+			gl_FragColor = vec4(0.4, 0.5, 0.2, 1.0);
+		}
+		</script>
+
+		<script>
+var mesh;
+
+function init(camera, scene) {
+	var geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+	var material = new THREE.ShaderMaterial({
+		vertexShader: document.getElementById( 'vertexShader' ).textContent,
+		fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+	});
+
+	mesh = new THREE.Mesh(geometry, material);
+	scene.add(mesh);
+}
+		
+function update(time) {
+	mesh.rotation.x = time * 0.03;
+	mesh.rotation.y = time * 0.15;
+}
+
+create3DScene({
+	init: init,
+	update: update
+});
+		</script>
+	</body>
+</html>

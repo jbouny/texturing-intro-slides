@@ -41,3 +41,16 @@ function create3DScene(config) {
 		renderer.render(scene, camera);
 	}
 }
+
+
+function loadBase64Texture(data, succeed) {
+	var image = document.createElement('img');
+	image.onload = function() {
+		var texture = new THREE.Texture(image);
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.needsUpdate = true;
+
+		succeed(texture);
+	}
+	image.src = data;
+}

@@ -28,7 +28,7 @@
 			}
 
 			.full-height {
-				width: 70%;
+				width: 100%;
 				min-height: 100% !important;
 				display: flex !important;
 				flex-direction: column !important;
@@ -36,6 +36,10 @@
 				top: 0 !important;
 				left: 0 !important;
 				z-index: -1!important;
+			}
+
+			.semi-width {
+				width: 70%;
 			}
 		</style>
 
@@ -105,7 +109,7 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						<iframe class="full-height" data-src="iframes/cube.html"></iframe>
+						<iframe class="full-height semi-width" data-src="iframes/cube.html"></iframe>
 						#### Hello_world.glsl
 
 							// Fragment shader
@@ -123,7 +127,7 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						<iframe class="full-height" data-src="iframes/cube-time.html"></iframe>
+						<iframe class="full-height semi-width" data-src="iframes/cube-time.html"></iframe>
 						#### Better_hello_world.glsl
 
 							// Fragment shader
@@ -163,8 +167,44 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						<iframe class="full-height" data-src="iframes/totoro-wireframe.html"></iframe>
-						#### Basic texture sampling 1/2
+						#### Repeat pattern
+
+						<div style="text-align: center; with: 100%">
+							<img src="iframes/resources/original/cube_pattern.jpg" style="width:30%; border:none"/>
+						</div>
+					</script>
+				</section>
+
+				<section >
+					<div style="text-align: center; with: 100%">
+						<img src="iframes/resources/original/cube_pattern_2.png" style="width:30%; border:none"/>
+						<img src="iframes/resources/original/cube_pattern_5.png" style="width:30%; border:none"/>
+						<img src="iframes/resources/original/cube_pattern_10.png" style="width:30%; border:none"/>
+					</div>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						<iframe class="full-height" data-src="iframes/cube-pattern.html"></iframe>
+						
+							// Fragment shader
+							varying vec2 vUv;
+							uniform float scale;
+							uniform sampler2D colorTexture;
+
+							void main()
+							{
+								// Sample the texture at the scaled UV coordinates
+								vec3 pixelColor = texture2D(colorTexture, scale).xyz;
+								gl_FragColor = vec4(pixelColor, 1.0);
+							}
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						<iframe class="full-height semi-width" data-src="iframes/totoro-wireframe.html"></iframe>
+						#### Basic texture sampling
 
 						<div style="text-align: right; with: 100%">
 							<img src="iframes/resources/original/totoro_Base_Color.png" style="width:30%; border:none"/>
@@ -172,28 +212,8 @@
 					</script>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						<iframe class="full-height" data-src="iframes/totoro-texture.html"></iframe>
-						#### Basic texture sampling 2/2
-
-							// Fragment shader
-							varying vec2 vUv;
-							uniform sampler2D colorTexture;
-
-							void main()
-							{
-								// Sample the texture at the UV coordinates
-								vec3 pixelColor = texture2D(colorTexture, vUv).xyz;
-								gl_FragColor = vec4(pixelColor * 0.5, 1.0);
-							}
-					</script>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						##EXAMPLE: repeating texture
-					</script>
+				<section>
+					<iframe class="full-height" data-src="iframes/totoro-texture.html"></iframe>
 				</section>
 
 				<section data-markdown>

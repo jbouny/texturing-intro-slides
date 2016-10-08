@@ -40,28 +40,20 @@
 		void main()
 		{
 			vec3 pixelColor = texture2D(colorTexture, vUv).xyz;
-			gl_FragColor = vec4(pixelColor * 0.5, 1.0);
+			gl_FragColor = vec4(pixelColor, 1.0);
 		}
 		</script>
 
 		<script>
 var mesh;
 
-function loadBase64Texture(data, destination) {
-	var image = document.createElement('img');
-	image.onload = function() {
-		var texture = new THREE.Texture(image);
-		texture.needsUpdate = true;
-		destination.value = texture;
-	}
-	image.src = data;
-}
-
 function init(camera, scene) {
 	var uniforms = {
 		colorTexture: {value: null}
 	}
-	loadBase64Texture(totoroBaseColor, uniforms.colorTexture);
+	loadBase64Texture(totoroBaseColor, function(texture) {
+		uniforms.colorTexture.value = texture;
+	});
 	
 	var bufferGeometryLoader = new THREE.BufferGeometryLoader();
 	var geometry = bufferGeometryLoader.parse(totoroGeometry);

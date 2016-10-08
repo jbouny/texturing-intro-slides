@@ -163,13 +163,36 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						EXAMPLE: basic texture (totoro mesh)
+						<iframe class="full-height" data-src="iframes/totoro-wireframe.html"></iframe>
+						#### Basic texture sampling 1/2
+
+						<div style="text-align: right; with: 100%">
+							<img src="iframes/resources/original/totoro_Base_Color.png" style="width:30%; border:none"/>
+						</div>
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						EXAMPLE: repeating texture
+						<iframe class="full-height" data-src="iframes/totoro-texture.html"></iframe>
+						#### Basic texture sampling 2/2
+
+							// Fragment shader
+							varying vec2 vUv;
+							uniform sampler2D colorTexture;
+
+							void main()
+							{
+								// Sample the texture at the UV coordinates
+								vec3 pixelColor = texture2D(colorTexture, vUv).xyz;
+								gl_FragColor = vec4(pixelColor * 0.5, 1.0);
+							}
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						##EXAMPLE: repeating texture
 					</script>
 				</section>
 

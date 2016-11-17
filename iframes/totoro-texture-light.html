@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Texture example</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="lib/three.min.js"></script>
+		<script src="lib/OrbitControls.js"></script>
+		<script src="template_scene.js"></script>
+		
+		<!-- Assets converted as js objects to be able to use them in a server less context -->
+		<script src="resources/js/icons.js"></script>
+		<script src="resources/js/totoro.js"></script>
+		<script src="resources/js/totoro_Base_Color.js"></script>
+
+		<script id="vertexShader" type="x-shader/x-vertex">
+		varying vec2 vUv;
+		varying vec3 vNormal;
+		varying vec3 vPosition;
+
+		void main()
+		{
+			vUv = uv;
+
+			vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+			vPosition = (modelMatrix * vec4(position, 1.0)).xyz / mvPosition.w;
+			vNormal = normalize(mat3(modelMatrix) * normal);
+			gl_Position = projectionMatrix * mvPosition;
+		}
+		</script>
+
+		<script id="fragmentShaderNormal" type="x-shader/x-fragment">
+		varying vec3 vNormal;
+
+		void main()
+		{
+			gl_FragColor = vec4(vNormal, 1.0);
+		}
+		</script>
+
+		<script id="fragmentShaderLightFactor" type="x-shader/x-fragment">
+		varying vec3 vNormal;
+		varying vec3 vPosition;
+		
+		uniform vec3 lightPosition;
+
+		void main()
+		{
+			float light = dot(normalize(lightPosition - vPosition), vNormal);
+			gl_FragColor = vec4(vec3(light), 1.0);
+		}
+		</script>
+
+		<script id="fragmentShaderLight" type="x-shader/x-fragment">
+		varying vec2 vUv;
+		varying vec3 vNormal;
+		varying vec3 vPosition;
+
+		uniform sampler2D colorTexture;
+		uniform vec3 lightPosition;
+
+		void main()
+		{
+			float light = dot(normalize(lightPosition - vPosition), vNormal);
+			vec3 pixelColor = texture2D(colorTexture, vUv).xyz;
+			gl_FragColor = vec4(pixelColor * light, 1.0);
+		}
+		</script>
+
+		<script>
+var meshes = [];
+var uniforms = {
+	colorTexture: {value: null},
+	lightPosition: {value: null}
+}
+
+function init(camera, scene) {
+	loadBase64Texture(bulbIcon, function(texture) {
+		var sprite = new THREE.Sprite(new THREE.SpriteMaterial({map: texture}));
+		sprite.scale.setScalar(0.2);
+		sprite.position.set(0, 0.4, 0.3);
+		scene.add(sprite);
+		uniforms.lightPosition.value = sprite.position;
+	});
+
+	loadBase64Texture(totoroBaseColor, function(texture) {
+		uniforms.colorTexture.value = texture;
+	});
+
+	var bufferGeometryLoader = new THREE.BufferGeometryLoader();
+	var geometry = bufferGeometryLoader.parse(totoroGeometry);
+	
+	function addMeshWithShader(fragmentShaderSuffix, x, label) {
+		var material = new THREE.ShaderMaterial({
+			uniforms: uniforms,
+			vertexShader: document.getElementById('vertexShader').textContent,
+			fragmentShader: document.getElementById('fragmentShader' + fragmentShaderSuffix).textContent
+		});
+
+		var mesh = new THREE.Mesh(geometry, material);
+		mesh.scale.setScalar(1./45.);
+		mesh.position.setX(x);
+		
+		var textSprite = makeSpriteFromText(label, {
+			backgroundColor: [100, 100, 100, 0.5],
+			borderColor: [100, 100, 100, 0.75],
+		});
+		textSprite.position.set(x, -0.6, 0);
+
+		scene.add(textSprite);
+		scene.add(mesh);
+		meshes.push(mesh);
+	}
+	
+	addMeshWithShader('Normal', -0.7, "World space normals");
+	addMeshWithShader('LightFactor', 0, "Lighting factor");
+	addMeshWithShader('Light', 0.7, "Final lighting");
+
+	camera.position.setX(1.0);
+	camera.position.setY(0.4);
+}
+
+function update(time) {
+	for (var i in meshes) {
+		meshes[i].rotation.y = time * 0.15 - 3.14159 * 0.5;
+	}
+	if (uniforms.lightPosition.value) {
+		uniforms.lightPosition.value.setX(Math.cos(time) * 0.35 + 0.35);
+	}
+}
+
+create3DScene({
+	init: init,
+	update: update
+});
+		</script>
+	</body>
+</html>

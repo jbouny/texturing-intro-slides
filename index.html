@@ -7,7 +7,7 @@
 		<title>The 3D texturing world</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/blood.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -17,7 +17,7 @@
 				background-color: rgba(20, 20, 20, 0.6);
 			}
 
-			.reveal.slide .slides > section, .reveal.slide .slides > section > section {
+			.reveal .slides > section, .reveal .slides > section > section {
 				min-height: 100% !important;
 				display: flex !important;
 				flex-direction: column !important;
@@ -41,6 +41,10 @@
 			.semi-width {
 				width: 70%;
 			}
+
+			.slide-number span {
+				font-size: 24px;
+			}
 		</style>
 
 		<!-- Printing and PDF exports -->
@@ -57,7 +61,7 @@
 			<div class="slides">
 				<section data-markdown>
 					<script type="text/template">
-						#The 3D texturing world
+						## The 3D texturing world
 						
 						Use case in WebGL for video games
 					</script>
@@ -418,6 +422,11 @@
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
+				slideNumber: true,
+				controls: false,
+				transition: "fade",
+				transitionSpeed: "fast",
+				center: false,
 
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [

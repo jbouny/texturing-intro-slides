@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Cube example</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="lib/three.min.js"></script>
+		<script src="lib/OrbitControls.js"></script>
+		<script src="template_scene.js"></script>
+		
+		<!-- Assets converted as js objects to be able to use them in a server less context -->
+		<script src="resources/js/cube_geometry.js"></script>
+		<script src="resources/js/image-shapes.js"></script>
+
+		<script id="vertexShader" type="x-shader/x-vertex">
+		varying vec2 vUv;
+
+		void main()
+		{
+			vUv = uv;
+			vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+			gl_Position = projectionMatrix * mvPosition;
+		}
+		</script>
+
+		<script id="fragmentShader" type="x-shader/x-fragment">
+		#define GRID_WIDTH 0.32
+		#define GRID_DIM 36.0
+		#define DOT_SIZE 0.035
+		#define LINE_SIZE 0.001
+
+		varying vec2 vUv;
+
+		uniform float time;
+		uniform vec2 mouse;
+		uniform sampler2D colorTexture;
+
+		bool intersectDot(vec2 position, bool drawLines) {
+			vec2 dist = vec2(
+				min(min(distance(position.x, vUv.x), distance(position.x - 1.0, vUv.x)), distance(position.x + 1.0, vUv.x)),
+				min(min(distance(position.y, vUv.y), distance(position.y - 1.0, vUv.y)), distance(position.y + 1.0, vUv.y)));
+			return length(dist) < DOT_SIZE || drawLines && min(dist.x, dist.y) < LINE_SIZE;
+		}
+
+		void main()
+		{
+			vec3 pixelColor = texture2D(colorTexture, vUv).xyz;
+			
+			if(intersectDot(mouse, true)) {
+				gl_FragColor = vec4(0.2, 0.8, 0.4, 1.0);
+				return;
+			}
+			else if (intersectDot(vec2(mod(time * 0.2, 1.0), cos(time*10.0) * 0.03 + 0.5), false)) {
+				gl_FragColor = vec4(0.8, 0.6, 0.4, 1.0);
+				return;
+			} 
+			
+			// Draw grid
+			vec2 grid = vUv * GRID_DIM - vec2(0.5, 0.0);
+			vec2 floorGrid = floor(grid + vec2(0.5));
+			if (distance(grid, floorGrid) > GRID_WIDTH && texture2D(colorTexture, vUv).a > 0.5) {
+				gl_FragColor = vec4(mix(vec3(0.3), vec3(vUv.x, vUv.y, 0.0), 0.4), 1.0);
+				return;
+			}
+			discard;
+		}
+		</script>
+
+		<script>
+var uniforms;
+var cubeMesh;
+var planeMesh;
+var sceneCamera;
+
+var mouse = new THREE.Vector2();
+var raycaster = new THREE.Raycaster();
+
+function init(camera, scene) {
+	sceneCamera = camera;
+	var bufferGeometryLoader = new THREE.BufferGeometryLoader();
+	var geometry = bufferGeometryLoader.parse(cubeGeometry);
+
+	uniforms = {
+		colorTexture: {value: null},
+		mouse: {value: new THREE.Vector2()},
+		time: {value: 0}
+	}
+
+	var material = new THREE.ShaderMaterial({
+		uniforms: uniforms,
+		vertexShader: document.getElementById( 'vertexShader' ).textContent,
+		fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+	
+		side: THREE.DoubleSide,
+		transparent: true
+	});
+
+	cubeMesh = new THREE.Mesh(geometry, material);
+	cubeMesh.position.set(2.0, 0.0, 0.0);
+	cubeMesh.scale.setScalar(0.5);
+	
+	planeMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
+	planeMesh.position.set(-1.0, 0.0, 0.0);
+	planeMesh.scale.setScalar(4.0);
+	planeMesh.rotation.z = Math.PI;
+	
+	scene.add(cubeMesh);
+	scene.add(planeMesh);
+
+	loadBase64Texture(cubeShape, function(texture) {
+		uniforms.colorTexture.value = texture;
+	});
+
+	camera.position.set(0, 0, -6);
+	
+	window.addEventListener('mousemove', function(event) {
+		mouse.x = -1 + 2 * event.clientX / window.innerWidth;
+		mouse.y = 1 - 2 * event.clientY / window.innerHeight;
+	}, false);
+}
+		
+function update(time) {
+	raycaster.setFromCamera(mouse, sceneCamera);
+	var intersects = raycaster.intersectObject(planeMesh);
+	if (intersects.length > 0) {
+		var intersect = intersects[0];
+		uniforms.mouse.value.set(intersect.uv.x, intersect.uv.y);
+	}
+
+	uniforms.time.value = time;
+
+	cubeMesh.rotation.y = time * 0.03;
+	cubeMesh.rotation.x = time * 0.15;
+}
+
+create3DScene({
+	init: init,
+	update: update
+});
+		</script>
+	</body>
+</html>

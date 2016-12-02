@@ -19,7 +19,7 @@
 		
 		<!-- Assets converted as js objects to be able to use them in a server less context -->
 		<script src="resources/js/cube_geometry.js"></script>
-		<script src="resources/js/cube_pattern.js"></script>
+		<script src="resources/js/image-patterns.js"></script>
 
 		<script id="vertexShader" type="x-shader/x-vertex">
 		varying vec2 vUv;
@@ -61,7 +61,6 @@ function init(camera, scene) {
 			colorTexture: {value: null},
 			scale: {value: scales[i]}
 		}
-		console.log(scales[i]);
 
 		var material = new THREE.ShaderMaterial({
 			uniforms: uniforms,
@@ -79,7 +78,7 @@ function init(camera, scene) {
 	}
 	animatedScale = materialsUniforms[0].scale;
 
-	loadBase64Texture(cubePattern, function(texture) {
+	loadBase64Texture(texturePattern, function(texture) {
 		for (var i in materialsUniforms) {
 			materialsUniforms[i].colorTexture.value = texture;
 		}

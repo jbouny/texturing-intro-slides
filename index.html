@@ -159,9 +159,30 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						## Texture as input
-						- What to sample?
-						- UV unfolding
+						## Okai, so let's summarize
+						I have a 3D model...
+
+						I can color a pixel...
+
+						I have a texture...
+
+						well...
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## UV Unfolding
+
+						<div style="text-align: center; with: 100%">
+							<img src="resources/unicorn-origami.jpg" style="width:50%; border:none"/>
+						</div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						<iframe class="full-height" data-src="iframes/cube-unfolding.html"></iframe>
 					</script>
 				</section>
 
@@ -195,7 +216,7 @@
 							void main()
 							{
 								// Sample the texture at the scaled UV coordinates
-								vec3 pixelColor = texture2D(colorTexture, scale).xyz;
+								vec3 pixelColor = texture2D(colorTexture, vUv * scale).xyz;
 								gl_FragColor = vec4(pixelColor, 1.0);
 							}
 					</script>
@@ -205,6 +226,22 @@
 					<script type="text/template">
 						<iframe class="full-height semi-width" data-src="iframes/totoro-wireframe.html"></iframe>
 						#### Basic texture sampling
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						<iframe class="full-height semi-width" data-src="iframes/totoro-texture.html#1.0"></iframe>
+
+						<div style="text-align: right; with: 100%">
+							<img src="iframes/resources/original/uv-test.png" style="width:30%; border:none"/>
+						</div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						<iframe class="full-height semi-width" data-src="iframes/totoro-texture.html"></iframe>
 
 						<div style="text-align: right; with: 100%">
 							<img src="iframes/resources/original/totoro_Base_Color.png" style="width:30%; border:none"/>
@@ -212,8 +249,27 @@
 					</script>
 				</section>
 
-				<section>
-					<iframe class="full-height" data-src="iframes/totoro-texture.html"></iframe>
+				<section data-markdown>
+					<script type="text/template">
+						<iframe class="full-height semi-width" data-src="iframes/totoro-texture.html#0.5"></iframe>
+						
+						### Combine both textures
+							
+							varying vec2 vUv;
+
+							uniform sampler2D colorTexture;
+							uniform sampler2D uvGridTexture;
+
+							void main()
+							{
+								// Blend the two textures
+								vec3 pixelColor = mix(
+									texture2D(colorTexture, vUv).xyz,
+									texture2D(uvGridTexture, vUv).xyz,
+									0.5);
+								gl_FragColor = vec4(pixelColor, 1.0);
+							}
+					</script>
 				</section>
 
 				<section data-markdown>

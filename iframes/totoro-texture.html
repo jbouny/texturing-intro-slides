@@ -20,6 +20,7 @@
 		<!-- Assets converted as js objects to be able to use them in a server less context -->
 		<script src="resources/js/totoro.js"></script>
 		<script src="resources/js/totoro_Base_Color.js"></script>
+		<script src="resources/js/image-patterns.js"></script>
 
 		<script id="vertexShader" type="x-shader/x-vertex">
 		varying vec2 vUv;
@@ -36,10 +37,15 @@
 		varying vec2 vUv;
 
 		uniform sampler2D colorTexture;
+		uniform sampler2D uvGridTexture;
+		uniform float mixValue;
 
 		void main()
 		{
-			vec3 pixelColor = texture2D(colorTexture, vUv).xyz;
+			vec3 pixelColor = mix(
+				texture2D(colorTexture, vUv).xyz,
+				texture2D(uvGridTexture, vUv).xyz,
+				mixValue);
 			gl_FragColor = vec4(pixelColor, 1.0);
 		}
 		</script>
@@ -49,10 +55,15 @@ var mesh;
 
 function init(camera, scene) {
 	var uniforms = {
-		colorTexture: {value: null}
+		colorTexture: {value: null},
+		uvGridTexture: {value: null},
+		mixValue: {value: Number(window.location.hash.substr(1)) || 0.0}
 	}
 	loadBase64Texture(totoroBaseColor, function(texture) {
 		uniforms.colorTexture.value = texture;
+	});
+	loadBase64Texture(textureUVTest, function(texture) {
+		uniforms.uvGridTexture.value = texture;
 	});
 	
 	var bufferGeometryLoader = new THREE.BufferGeometryLoader();

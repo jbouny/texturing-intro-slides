@@ -81,49 +81,171 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						## What is texturing?
-					</script>
-				</section>
-
-				<section data-markdown data-background-image="resources/zhelong-xu-boy-face-to-the-dragon.jpg">
-					<script type="text/template">
-						## Why this need?
-
-						<div class="artist"><a href="https://www.artstation.com/artist/zhelong" target="_blank">Artist - Zhelong XU</a></div>
+						## Texture?
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## Graphical pipeline
-						- Vertices / Primitives
-						- Vertex processor
-						- Rasterization
-						- Fragment processor
-						- Output
+						### Definition
+
+						In common usage: characteristics of a material
+
+						- roughness
+						- color
+						- conductivity
+						- ...
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## Shader?
+						### Materials everywhere
+
+						Wood, metal, fabric, plastic, concrete, leather...
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/Leather_sample_book.jpg" style="width:80%; border:none"/>
+						</div>
 					</script>
 				</section>
 
-				<section data-markdown data-background-image="resources/kyle-horwood-floortilesfinallarge.jpg">
+				<section data-markdown data-background-image="resources/christmas_ball.jpg">
 					<script type="text/template">
-						## Fragment shader
+						### Texturing
 
-						<div class="artist"><a href="https://www.artstation.com/artist/3dkyle" target="_blank">Artist - Kyle Horwood</a></div>
+						The art of giving a texture to a digital object
 					</script>
 				</section>
 
 				<section data-markdown>
+					<script type="text/template">
+						## Terminology
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Object
+
+						Composed of vertices, edges, faces
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/terminology_basic.png" style="width:50%; border:none"/>
+						</div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Affine transformations
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/terminology_affine.png" style="width:60%; border:none"/>
+						</div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### The graphics pipeline
+
+						Steps to render an image from inputs to a final image
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/evasgl_graphics_pipeline.png" style="width:80%; border:none"/>
+						</div>
+						
+						<div class="artist"><a href="https://www.enlightenment.org/program_guide/evasgl_pg" target="_blank">Illustration - EvasGL</a></div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Shaders
+						
+						The graphics pipeline steps can be
+
+						- fixed
+						- programmable
+						
+						A custom program executed on the GPU is a shader
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Fragment shader
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/evasgl_rasterization.png" style="width:30%; border:none"/>
+						</div>
+
+						- we are only interested in the fragment shader
+						- give the final color of the object
+
+						<div class="artist"><a href="https://www.enlightenment.org/program_guide/evasgl_pg" target="_blank">Illustration - EvasGL</a></div>
+					</script>
+				</section>
+
+				<section data-markdown data-background-image="resources/stefano-carta-colgrey.jpg">
 					<script type="text/template">
 						## Write our own
-						- OpenGL
-						- WebGL
-						- GLSL
+
+						<div class="artist"><a href="https://www.artstation.com/artist/stefanocarta" target="_blank">Artist - Stefano Carta</a></div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Technologies 1/2
+
+						- **OpenGL**
+
+						  Cross language specification for 3D programming
+
+						  Equivalent to DirectX, Vulkan, Metal
+
+						- **OpenGL ES**
+
+						   Specification subset for embedded system
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Technologies 2/2
+
+						- **WebGL**
+
+						   Javascript specification based on OpenGL ES
+
+						   - WebGL = OpenGL ES 2.0
+						   - WebGL 2.0 = OpenGL ES 3.0
+
+						- **GLSL**
+
+						   OpenGL Shading Language
+						   
+						   And its variant GLSL ES
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Write a fragment shader
+
+						Syntax
+
+						- based on the C syntax
+						- define a main()
+						- set gl_FragColor
+
+						Usage
+
+						- ask the source compilation
+						- bind parameters (if any)
+						- use it: install the program
 					</script>
 				</section>
 
@@ -168,12 +290,57 @@
 					</script>
 				</section>
 
+				<section data-markdown data-background-image="resources/kyle-horwood-floortilesfinallarge.jpg">
+					<script type="text/template">
+						## Image
+
+						<div class="artist"><a href="https://www.artstation.com/artist/3dkyle" target="_blank">Artist - Kyle Horwood</a></div>
+					</script>
+				</section>
+
 				<section data-markdown>
 					<script type="text/template">
-						## Texture?
-						- What is a texture
-						- Format (FP/bpp)
-						- Interpretation
+						### What is an image?
+
+						- 3D matrix: **width** x **height** x **channels**
+
+						- usual channels are Red, Green and Blue
+
+						- other usual channel: Alpha
+
+						- it could be an other color space (Hue Saturation Value, ...)
+
+						- it could be any other type of data (used as a standard buffer)
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Pixel format
+
+						- bit depth: number of used bits to store a pixel channel information
+
+						  usually 8, 16 or 32 bpc (bits per channels)
+
+						- number format
+
+						  usually integer or floating point
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Example
+
+						- jpg format store information as RGB 8 bpc
+
+						- raw formats from cameras capture usually RGB 12 bpc
+
+						- gif format store indices from a palette
+
+						   - the palette has a size of 256
+
+						   - each index is on 8 bits
 					</script>
 				</section>
 
@@ -195,9 +362,31 @@
 				<section data-markdown>
 					<script type="text/template">
 						## UV Unfolding
+					</script>
+				</section>
 
-						<div style="text-align: center; with: 100%">
-							<img src="resources/unicorn-origami.jpg" style="width:50%; border:none"/>
+				<section data-markdown>
+					<script type="text/template">
+						### Origami
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/unicorn-origami.jpg" style="width:40%; border:none"/>
+						</div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Unfolding
+
+						- unfold a 3d mesh by cutting it
+
+						   - on parts which can be folded again
+
+						   - on parts which need to be sticked
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/unwrap.png" style="width:40%; border:none"/>
 						</div>
 					</script>
 				</section>
@@ -210,20 +399,34 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						#### Repeat pattern
+						## Tiling
+					</script>
+				</section>
 
-						<div style="text-align: center; with: 100%">
-							<img src="iframes/resources/original/cube_pattern.jpg" style="width:30%; border:none"/>
+				<section data-markdown>
+					<script type="text/template">
+						### Pattern
+						
+						- the simplest way to texture
+
+						- same thing than using a printed paper with a pattern for origami
+
+						<div style="text-align: center; width: 100%">
+							<img src="iframes/resources/original/cube_pattern.jpg" style="width:20%; border:none"/>
 						</div>
 					</script>
 				</section>
 
-				<section >
-					<div style="text-align: center; with: 100%">
-						<img src="iframes/resources/original/cube_pattern_2.png" style="width:30%; border:none"/>
-						<img src="iframes/resources/original/cube_pattern_5.png" style="width:30%; border:none"/>
-						<img src="iframes/resources/original/cube_pattern_10.png" style="width:30%; border:none"/>
-					</div>
+				<section data-markdown>
+					<script type="text/template">
+						### Repeat pattern
+
+						<div style="text-align: center; width: 100%">
+							<img src="iframes/resources/original/cube_pattern_2.png" style="width:30%; border:none"/>
+							<img src="iframes/resources/original/cube_pattern_5.png" style="width:30%; border:none"/>
+							<img src="iframes/resources/original/cube_pattern_10.png" style="width:30%; border:none"/>
+						</div>
+					</script>
 				</section>
 
 				<section data-markdown>
@@ -246,8 +449,16 @@
 
 				<section data-markdown>
 					<script type="text/template">
+						## Basic texture sampling
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
 						<iframe class="full-height semi-width" data-src="iframes/totoro-wireframe.html"></iframe>
-						#### Basic texture sampling
+						### Here a 3D model
+						
+						We want to apply a texture on it
 					</script>
 				</section>
 
@@ -255,7 +466,8 @@
 					<script type="text/template">
 						<iframe class="full-height semi-width" data-src="iframes/totoro-texture.html#1.0"></iframe>
 
-						<div style="text-align: right; with: 100%">
+						<div style="text-align: right; width: 100%">
+							<h4>Applied image</h4>
 							<img src="iframes/resources/original/uv-test.png" style="width:30%; border:none"/>
 						</div>
 					</script>
@@ -265,7 +477,8 @@
 					<script type="text/template">
 						<iframe class="full-height semi-width" data-src="iframes/totoro-texture.html"></iframe>
 
-						<div style="text-align: right; with: 100%">
+						<div style="text-align: right; width: 100%">
+							<h4>Applied image</h4>
 							<img src="iframes/resources/original/totoro_Base_Color.png" style="width:30%; border:none"/>
 						</div>
 					</script>
@@ -294,12 +507,52 @@
 					</script>
 				</section>
 
-				<section data-markdown data-markdown data-background-image="resources/chris-pollitt-rad-rodgers.jpg">
+				<section data-markdown>
 					<script type="text/template">
-						## Cool!
-						- But... it's quite flat
-						- ... we want light
-						- Normal (definition)
+						## Animation
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Write what you want
+
+						- only constraint: should take few milliseconds maximum
+
+						- possible to display anything
+
+						   example: shadertoy
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						<iframe class="full-height semi-width" data-src="iframes/totoro-animation.html"></iframe>
+
+						### Desintegration
+
+							varying vec2 vUv;
+
+							uniform sampler2D colorTexture;
+							uniform sampler2D mask;
+							uniform float animation;
+
+							void main()
+							{
+								float mask = texture2D(mask, vUv).r;
+								if (mask > animation) discard; // transparent pixel if low mask value
+								vec3 pixelColor = mix(
+									vec3(1.0, 0.8, 0.5), // burn color
+									texture2D(colorTexture, vUv).xyz,
+									min((animation - mask), 0.1)*10.0);
+								gl_FragColor = vec4(pixelColor, 1.0);
+							}
+					</script>
+				</section>
+
+				<section data-markdown data-background-image="resources/chris-pollitt-rad-rodgers.jpg">
+					<script type="text/template">
+						## Light
 
 						<div class="artist"><a href="https://www.artstation.com/artist/maskedvertexeater" target="_blank">Artist - Chris Pollitt</a></div>
 					</script>
@@ -307,23 +560,74 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						<iframe class="full-height" data-src="iframes/totoro-texture-light.html"></iframe>
-						#### Let's add a light point
+						### Cool!
+
+						- But... it's quite flat
+
+						- ... we want light
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## Or some light points
-						EXAMPLE: light points
+						### Lighting
+
+						Direct
+
+						- point light
+						- spot light
+						- directional light
+
+						Indirect
+
+						- ambient lighting
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Normal
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/normals.png" style="width:40%; border:none"/>
+						</div>
+
+						*In geometry, a normal is an object such as a line or vector that is perpendicular to a given object*
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						<iframe class="full-height" data-src="iframes/totoro-texture-light.html"></iframe>
+						#### Let's add a point light
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Normal map
+
+						- faking details without polygons
+
+						- store these information in an image
+
+						- each vector is stored as a RGB pixel
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Create details
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/normal_painting.gif" style="width:40%; border:none"/>
+						</div>
 					</script>
 				</section>
 
 				<section data-markdown data-background-image="resources/substance-source-leather.jpg">
 					<script type="text/template">
-						## Smoothness overflow
-						- Let's add some details
-						- Normal map
+						## Realism
 
 						<div class="artist"><a href="https://source.allegorithmic.com/" target="_blank">Source - Allegorithmic Substance Source</a></div>
 					</script>
@@ -331,79 +635,34 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						EXAMPLE: light + normal map
+						### Classic reflection model
+
+						- empirical models
+
+						   - lambert
+						   - phong
+						   - blinn-phong (cheaper)
+						   - ...
+
+						<div style="text-align: center; width: 100%">
+							<img src="resources/phong.png" style="width:80%; border:none"/>
+						</div>
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## It should be quite dirt in a forest
-						- We now want to add dirt
-						- Specular map
-						- EXAMPLE: mirror + specular map
-					</script>
-				</section>
+						### Problems
 
-				<section data-markdown>
-					<script type="text/template">
-						## Blinn-phong
-						- Hey, we just implemented the blinn-phong shading
-						- Mainly used in video games
-						- Based on an empirical model
-					</script>
-				</section>
+						- empirical models
 
-				<section data-markdown>
-					<script type="text/template">
-						## Need realism
-						- Shadows
-						- Real time / baked in maps
-					</script>
-				</section>
-
-				<section data-markdown data-background-image="resources/pierre-fleau-blendmat.jpg">
-					<script type="text/template">
-						## The physically based revolution
-						- Need of realism
-						- Why not simply use the real world as input?
-						- Based on measurable data (light, material, animation, color spaces)
-
-						<div class="artist"><a href="https://www.artstation.com/artist/pfleau" target="_blank">Artist - Pierre Fleau</a></div>
-					</script>
-				</section>
-
-				<section data-markdown data-background-image="resources/substance-source-bronze.jpg">
-					<script type="text/template">
-						## New workflow
-						- End of painting textures
-						- Materials creation
-							- Channels with real signification
-							- Data set or textures set
-
-						<div class="artist"><a href="https://source.allegorithmic.com/" target="_blank">Source - Allegorithmic Substance Source</a></div>
-					</script>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Softwares evolution
-						- Too much data to interpret
-						- Need real time feedback instead of 2d painting
-						- Paint materials
-					</script>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Metal/roughness workflow
-
-						EXAMPLE: metal/rough
+						- non-conservation of energy
 					</script>
 				</section>
 
 				<section data-markdown data-background-image="resources/the-witcher-mblaszcak.jpg">
 					<script type="text/template">
-						Used in modern games: examples
+						## Physically based rendering
 
 						<div class="artist"><a href="https://www.artstation.com/artist/mblaszczak" target="_blank">Artist - Marcin Blaszczak</a></div>
 					</script>
@@ -411,27 +670,160 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						## Graphical memory consumption
-						- Some math
+						### The physically based revolution
+
+						- need of realism
+
+						- why not simply use the real world as input?
+
+						- based on measurable data (light, material, animation, color spaces)
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## How to reduce needed memory?
-						- We spoke about "material painting"
-						- Masks / materials workflow
-						- Why not take it literally?
+						### Implications
+
+						- changes in game engines
+						
+						   - HDR images
+						   - work in multiple color spaces
+
+						- changes in behaviors
+
+						    - observe the environment
+					</script>
+				</section>
+
+				<section data-background-image="resources/jarrod-hasenjager-shaderdev-bronze-studio-v01.jpg">
+					<div class="artist"><a href="https://www.artstation.com/artist/hasenjager" target="_blank">Artist - Jarrod Hasenjager</a></div>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Use
+
+						- widely use in game industry for few years
+
+						- almost all recents AAA and indies games
+
+						- natively handled in most game engines (UE, Unity, ...)
+					</script>
+				</section>
+
+				<section data-markdown data-background-image="resources/substance-source-bronze.jpg">
+					<script type="text/template">
+						## Workflow
+
+						<div class="artist"><a href="https://source.allegorithmic.com/" target="_blank">Source - Allegorithmic Substance Source</a></div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Multiple maps
+
+						- for each model, we cannot store information in a single image
+
+						- a standard PBR shader implies at least 8 channels
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### New needs
+
+						- end of image painting
+
+						- materials creation/painting
+
+							- channels with real signification
+							- textures set
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Softwares evolution
+
+						- too much data to interpret
+
+						- need real time feedback instead of 2D painting
+
+						- paint materials
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Softwares
+
+						- materials creation
+
+						   - Substance Designer
+						   - Megascans Studio
+						   - ...
+
+						- texturing
+
+						   - Substance Painter
+						   - Quixel Suite
+						   - 3D-Coat
+						   - ...
+					</script>
+				</section>
+
+				<section data-markdown data-background-image="resources/substance_painter.jpg">
+					<script type="text/template">
+						### Example: Substance Painter
+					</script>
+				</section>
+
+				<section data-markdown data-background-image="resources/sebastian-zapata-render-01-post.jpg">
+					<script type="text/template">
+						## Photogrammetry
+
+						<div class="artist"><a href="https://www.artstation.com/artist/sebastianzapata" target="_blank">Artist - Sebastian Zapata</a></div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Definition
+
+						*Photogrammetry is the science of making measurements from photographs*
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Workflow
+
+						- take many pictures from camera
+
+						- extract information
+
+						- "delighting": remove environmental lighting
+
+						- make materials tileables
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Use
+
+						- used in many AAA games
+
+						- at least in reusable materials
+
+						- example: Star Wars Battlefront, Battlefield 1, ...
 					</script>
 				</section>
 
 				<section data-markdown data-background-image="resources/amy-payne-mw-pool-tile-substance-materials.jpg">
 					<script type="text/template">
 						## Material layering
-						- Deport the blending in shaders
-						- Materials database
-						- Save only masks
-						- Dynamic aspect
 
 						<div class="artist"><a href="https://www.artstation.com/artist/luthyn" target="_blank">Artist - Amy Payne</a></div>
 					</script>
@@ -439,7 +831,77 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						EXAMPLE: material layering
+						### Let's summary the standard workflow
+
+						- we have a ready to use materials library
+
+						- we mainly blend them together on a mesh
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Blending directly in shader
+
+						- we have seen we can do quite anything in a shader
+
+						- so, why not blend these materials directly inside the shader?
+
+						- save only masks on each asset
+					</script>
+				</section>
+
+				<section data-markdown data-background-image="resources/dynamic_material_blending_materials.jpg">
+					<script type="text/template">
+						### Example
+
+						<div class="artist"><a href="https://www.allegorithmic.com" target="_blank">Source - Allegorithmic</a></div>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Benefits
+
+						- for each assets, we reuse materials from a given library
+
+						   - lower memory consumption (if small library)
+
+						- consistency between assets
+
+						- increase quality
+
+						### Cons
+
+						- high cost
+
+						- doesn't fit every use cases
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						### Use
+
+						- only on some games in development
+
+						- example: Star Citizen
+					</script>
+				</section>
+
+				<section data-markdown data-background-image="resources/pierre-fleau-blendmat.jpg">
+					<script type="text/template">
+						#### To be continued...
+
+						<div class="artist"><a href="https://www.artstation.com/artist/pfleau" target="_blank">Artist - Pierre Fleau</a></div>
+					</script>
+				</section>
+
+				<section data-markdown data-background-image="resources/joel-zakrisson-fishingtrip-joelzakrisson.jpg">
+					<script type="text/template">
+						#### Thanks
+
+						<div class="artist"><a href="https://www.artstation.com/artist/joelzakrisson" target="_blank">Artist - Joel Zakrisson</a></div>
 					</script>
 				</section>
 			</div>

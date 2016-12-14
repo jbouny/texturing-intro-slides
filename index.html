@@ -97,7 +97,7 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						### Definition
+						### Texture definition
 
 						In common usage: characteristics of a material
 
@@ -247,9 +247,9 @@
 
 						Syntax
 
-						- based on the C syntax
-						- define a main()
-						- set gl_FragColor
+						- based on the **C** syntax
+						- define a `main()`
+						- set `gl_FragColor`
 
 						Usage
 
@@ -314,11 +314,11 @@
 
 						- 3D matrix: **width** x **height** x **channels**
 
-						- usual channels are Red, Green and Blue
+						- usual channels are **Red**, **Green** and **Blue**
 
-						- other usual channel: Alpha
+						- other usual channel: **Alpha**
 
-						- it could be an other color space (Hue Saturation Value, ...)
+						- it could be an other color space (**Hue** **Saturation** **Value**, ...)
 
 						- it could be any other type of data (used as a standard buffer)
 					</script>
@@ -330,7 +330,7 @@
 
 						- bit depth: number of used bits to store a pixel channel information
 
-						  usually 8, 16 or 32 bpc (bits per channels)
+						  usually **8**, **16** or **32 bpc** (bits per channels)
 
 						- number format
 
@@ -342,15 +342,15 @@
 					<script type="text/template">
 						### Example
 
-						- jpg format store information as RGB 8 bpc
+						- jpg format store information as **RGB 8 bpc**
 
-						- raw formats from cameras capture usually RGB 12 bpc
+						- raw formats from cameras capture usually **RGB 12 bpc**
 
 						- gif format store indices from a palette
 
-						   - the palette has a size of 256
+						   - the palette can contains **256 RGB 8bpc** colors
 
-						   - each index is on 8 bits
+						   - each index is on **8 bits**
 					</script>
 				</section>
 
@@ -389,11 +389,13 @@
 					<script type="text/template">
 						### Unfolding
 
-						- unfold a 3d mesh by cutting it
+						- unfold a 3d mesh by **cutting** it
 
-						   - on parts which can be folded again
+						   - on parts which can be **folded again**
 
-						   - on parts which need to be sticked
+						   - on parts which need to be **sticked**
+
+						- pay attention to UV seams
 
 						<div style="text-align: center; width: 100%">
 							<img src="resources/unwrap.png" style="width:40%; border:none"/>
@@ -457,9 +459,11 @@
 					</script>
 				</section>
 
-				<section data-markdown>
+				<section data-markdown data-background-image="resources/david_nicholls_wood.jpg">
 					<script type="text/template">
 						## Basic texture sampling
+
+						<div class="artist"><a href="https://twitter.com/Shriken" target="_blank">Artist - David Nicholls</a></div>
 					</script>
 				</section>
 
@@ -527,11 +531,13 @@
 					<script type="text/template">
 						### Write what you want
 
-						- only constraint: should take few milliseconds maximum
+						- restriction: should only take few milliseconds
 
 						- possible to display anything
 
-						   example: shadertoy
+						   example: [Shadertoy](https://www.shadertoy.com/)
+
+						<iframe data-src="iframes/cube-unfolding.html" style="height:400px; width: 100%"></iframe>
 					</script>
 				</section>
 
@@ -622,6 +628,10 @@
 						- store these information in an image
 
 						- each vector is stored as a RGB pixel
+
+						<div style="text-align: center; width: 100%">
+							<img src="iframes/resources/original/totoro_Normal.jpg" style="width:20%; border:none"/>
+						</div>
 					</script>
 				</section>
 
@@ -696,7 +706,7 @@
 
 						- changes in game engines
 						
-						   - HDR images
+						   - HDR images (WebGL2)
 						   - work in multiple color spaces
 
 						- changes in behaviors
@@ -713,7 +723,7 @@
 					<script type="text/template">
 						### Use
 
-						- widely use in game industry for few years
+						- widely used in game industry for few years
 
 						- almost all recents AAA and indies games
 
@@ -749,6 +759,7 @@
 
 							- channels with real signification
 							- textures set
+							- reuse materials
 					</script>
 				</section>
 
